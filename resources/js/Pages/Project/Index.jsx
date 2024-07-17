@@ -22,6 +22,20 @@ export default function Index({ auth, projects, queryParams = null }) {
     searchFieldChanged(name, e.target.value)
   }
 
+  const sortChanged = (name) => {
+    if (name === queryParams.sort_field) {
+      if (queryParams.sort_direction === 'asc') {
+        queryParams.sort_direction = 'desc'
+      } else {
+        queryParams.sort_direction = 'asc'
+      }
+    } else {
+      queryParams.sort_field = name
+      queryParams.sort_direction = 'asc'
+    }
+    router.get(route('project.index'), queryParams)
+  }
+
   return (
     <AuthenticatedLayout
       user={auth.user}
@@ -39,10 +53,10 @@ export default function Index({ auth, projects, queryParams = null }) {
                   <tr className='text-nowrap'>
                     <th className='px-3 py-2'>ID</th>
                     <th className='px-3 py-2'>Image</th>
-                    <th className='px-3 py-2'>Name</th>
-                    <th className='px-3 py-2'>Status</th>
-                    <th className='px-3 py-2'>Create Date</th>
-                    <th className='px-3 py-2'>Due Date</th>
+                    <th onClick={(e) => sortChanged('name')} className='px-3 py-2'>Name</th>
+                    <th onClick={(e) => sortChanged('status')} className='px-3 py-2'>Status</th>
+                    <th onClick={(e) => sortChanged('created_at')} className='px-3 py-2'>Create Date</th>
+                    <th onClick={(e) => sortChanged('due_date')} className='px-3 py-2'>Due Date</th>
                     <th className='px-3 py-2'>Created By</th>
                     <th className='px-3 py-2 text-right'>Actions</th>
                   </tr>
@@ -53,6 +67,7 @@ export default function Index({ auth, projects, queryParams = null }) {
                     <th className='px-3 py-2'></th>
                     <th className='px-3 py-2'>
                       <TextInput
+                        defaultValue={queryParams.name}
                         className="w-full"
                         placeholder="Project Name"
                         onBlur={e => searchFieldChanged('name', e.target.value)}
@@ -60,6 +75,7 @@ export default function Index({ auth, projects, queryParams = null }) {
                     </th>
                     <th className='px-3 py-2'>
                       <SelectInput className="w-full"
+                        defaultValue={queryParams.status}
                         onChange={(e) => searchFieldChanged("status", e.target.value)}>
                         <option value="">Select Status</option>
                         <option value="pending">Pending</option>
