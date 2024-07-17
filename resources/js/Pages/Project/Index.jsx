@@ -4,6 +4,7 @@ import Pagination from '@/Components/Pagination';
 import { PROJECT_STATUS_CLASS_MAP, PROJECT_STATUS_TEXT_MAP } from '@/constants.jsx';
 import TextInput from '@/Components/TextInput';
 import SelectInput from '@/Components/SelectInput';
+import { ChevronUpIcon, ChevronDownIcon } from '@heroicons/react/16/solid'
 
 
 export default function Index({ auth, projects, queryParams = null }) {
@@ -48,15 +49,47 @@ export default function Index({ auth, projects, queryParams = null }) {
           <div className="bg-white dark:bg-gray-800 border-2-red overflow-hidden shadow-sm sm:rounded-lg">
             <div className="p-6 text-gray-900">
 
-              <table className='w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400'>
+              <div className='overflow-auto'><table className='w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400'>
                 <thead className='text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400 border-b-2 border-gray-500'>
                   <tr className='text-nowrap'>
                     <th className='px-3 py-2'>ID</th>
                     <th className='px-3 py-2'>Image</th>
-                    <th onClick={(e) => sortChanged('name')} className='px-3 py-2'>Name</th>
-                    <th onClick={(e) => sortChanged('status')} className='px-3 py-2'>Status</th>
-                    <th onClick={(e) => sortChanged('created_at')} className='px-3 py-2'>Create Date</th>
-                    <th onClick={(e) => sortChanged('due_date')} className='px-3 py-2'>Due Date</th>
+                    <th onClick={(e) => sortChanged('name')} className='cursor-pointer'>
+                      <div className='flex items-center justify-between gap-1 w-fit'>
+                        Name
+                        <div>
+                          <ChevronUpIcon className='w-4' />
+                          <ChevronDownIcon className='w-4 -mt-2' />
+                        </div>
+                      </div>
+                    </th>
+                    <th onClick={(e) => sortChanged('status')} className='cursor-pointer'>
+                      <div className='flex items-center justify-between gap-1 w-fit'>
+                        Status
+                        <div>
+                          <ChevronUpIcon className='w-4' />
+                          <ChevronDownIcon className='w-4 -mt-2' />
+                        </div>
+                      </div>
+                    </th>
+                    <th onClick={(e) => sortChanged('created_at')} className='cursor-pointer'>
+                      <div className='flex items-center justify-between gap-1 w-fit'>
+                        Create Date
+                        <div>
+                          <ChevronUpIcon className='w-4' />
+                          <ChevronDownIcon className='w-4 -mt-2' />
+                        </div>
+                      </div>
+                    </th>
+                    <th onClick={(e) => sortChanged('due_date')} className='cursor-pointer'>
+                      <div className='flex items-center justify-between gap-1 w-fit'>
+                        Due Date
+                        <div>
+                          <ChevronUpIcon className='w-4' />
+                          <ChevronDownIcon className='w-4 -mt-2' />
+                        </div>
+                      </div>
+                    </th>
                     <th className='px-3 py-2'>Created By</th>
                     <th className='px-3 py-2 text-right'>Actions</th>
                   </tr>
@@ -113,7 +146,7 @@ export default function Index({ auth, projects, queryParams = null }) {
                     </tr>
                   ))}
                 </tbody>
-              </table>
+              </table></div>
               <Pagination links={projects.meta.links} />
             </div>
           </div>
